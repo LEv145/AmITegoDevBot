@@ -37,20 +37,22 @@ class information(commands.Cog):
         else:
             if name in cogs:
                 cog = None
+                namec = None
                 for i in self.bot.cogs:
                     coge = self.bot.cogs[i]
                     if name in coge.cog_name:
                         cog = coge
+                        namec = i
                         break
 
                 name = cog.cog_name[0]
                 comm_list = []
 
                 for command in self.bot.commands:
-                    if name in command.cog_name:
+                    if command.cog_name == namec:
                         if not command.hidden:
                             comm_list.append(
-                                f"**{prefix}{command.aliases[0]}:** {command.description}\n`{prefix}{command.usage}`\n\n")
+                                f"**{command.aliases[0]}:** {command.description}\n`{prefix}{command.usage}`\n\n")
 
                 embed = discord.Embed(
                     title=f"Хелп | {name}",
