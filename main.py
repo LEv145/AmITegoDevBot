@@ -39,7 +39,7 @@ async def on_ready():
 
 loop = Loop(client)
 try:
-    loop.activator()
+    await loop.activator()
 except AssertionError:
     pass
 
