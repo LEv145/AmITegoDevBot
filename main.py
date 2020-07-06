@@ -1,5 +1,7 @@
 import discord
-import os,random,asyncio
+import os
+import random
+import asyncio
 from discord.ext import commands, tasks
 import json
 from config import PREFIX, TOKEN
