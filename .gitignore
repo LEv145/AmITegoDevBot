@@ -1,2 +1,7 @@
+*.bat
+*.pyc
+
 config.py
+
 __pycache__/
+.idea/
