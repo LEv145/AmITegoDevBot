@@ -24,9 +24,10 @@ class information(commands.Cog):
 
         cogs = []
         for i in self.bot.cogs:
-            hide = len(i.cog_name)
+            cog = self.bot.cogs[i]
+            hide = len(cog.cog_name)
             if hide == 1:
-                cogs.append(f"{i.cog_name}")
+                cogs.append(f"{cog.cog_name[0]}")
 
         if not name:
             embed = discord.Embed(
@@ -37,8 +38,9 @@ class information(commands.Cog):
             if name in cogs:
                 cog = None
                 for i in self.bot.cogs:
-                    if name in i.cog_name:
-                        cog = self.bot.cogs[i]
+                    coge = self.bot.cogs[i]
+                    if name in coge.cog_name:
+                        cog = coge
                         break
 
                 name = cog.cog_name[0]
@@ -63,7 +65,7 @@ class information(commands.Cog):
             else:
                 embed = discord.Embed(
                     description=f"{ctx.author.display_name}, Модуль не найден!\nЧтоб узнать список команд пропишите !!хелп <модуль>\n"
-                                f"**Доступные модули:** {', '.join(cogs)}")
+                                f"**Доступные модули:** {''.join(cogs)}")
                 await ctx.send(embed=embed)
 
 

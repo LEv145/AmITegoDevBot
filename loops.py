@@ -19,7 +19,7 @@ class Loop:
                 print(Fore.RED + "[ERROR] " + Style.RESET_ALL + f"\n{e}")
                 print(Fore.RED + "[ERROR] " + Style.RESET_ALL + f"Цикл MUTE_LOOP продолжает свою работу!")
 
-    async def activator(self):
+    def activator(self):
         loop = asyncio.get_event_loop()
 
         asyncio.ensure_future(self.none_loop())
