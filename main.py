@@ -2,11 +2,12 @@ import discord
 import os,random,asyncio
 from discord.ext import commands, tasks
 import json
+from config import PREFIX, TOKEN
 
 
 
 
-bot = commands.Bot(command_prefix='+')
+bot = commands.Bot(command_prefix=PREFIX)
 bot.remove_command('help')
 
 
@@ -38,9 +39,8 @@ for filename in os.listdir('./cgs'): # Цикл перебирающий фай�
 
 
 
-with open('token.txt','r') as f:
-    token = f.read()
 
 
 
-bot.run(token)
+
+bot.run(TOKEN)
