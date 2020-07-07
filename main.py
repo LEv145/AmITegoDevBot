@@ -1,10 +1,7 @@
 import os
 import config
 import discord
-import nest_asyncio
-nest_asyncio.apply()
-
-from loops import Loop
+from Modules.loops import Loop
 from discord.ext import commands
 from colorama import Fore, Style  # Цветная консоль
 from colorama import init  # Цветная консоль

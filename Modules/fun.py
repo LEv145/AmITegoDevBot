@@ -5,7 +5,6 @@ import config
 import random
 import sqlite3
 import datetime
-import nekos
 from discord.ext import commands
 
 
@@ -15,8 +14,6 @@ class Fun(commands.Cog):
         self.bot = bot
         self._last_member = None
         self.cog_name = ["Фановые"]
-        
-
 
     @commands.command(
         aliases=["рандом", "рандомайзер", "random"],
@@ -98,7 +95,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
    
     @commands.command(
-        aliases=["сапер", "sap", "saper"],
+        aliases=["сапер", "saper"],
         description="Сыграть в сапер",
         usage="сапер")
     async def sap(self, ctx):
@@ -110,7 +107,7 @@ class Fun(commands.Cog):
         for r in r_list:
             await msg.add_reaction(r)
         try:
-            react, user = await self.Bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
         except Exception:
             await msg.delete()
         else:
@@ -226,7 +223,7 @@ class Fun(commands.Cog):
         await msg.edit(embed= emb, content= None)
 
     @commands.command(
-        aliases=["поженится", "marry"],
+        aliases=["поженится"],
         description="Поженится с юзером",
         usage="поженится <Пользователь>")
     async def marry(self, ctx, user: discord.User = None):
@@ -241,7 +238,7 @@ class Fun(commands.Cog):
         db.commit()
 
         no_one = []
-        if user != None:
+        if user:
             if user == ctx.message.author:
                 await ctx.send('Вы не можете жениться на себе')
             else:
@@ -291,7 +288,7 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(
-        aliases=["развестись", "divorce"],
+        aliases=["развестись"],
         description="Развестить с пользователем",
         usage="развестись <Пользователь>")
     async def divorce(self, ctx):
@@ -322,149 +319,15 @@ class Fun(commands.Cog):
                     db.close()
 
                                    
-    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
-    async def search( ctx,*, amount: str, member = None):
+    @commands.command(aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
+    async def search(self, ctx,*, amount: str):
         if not amount:
-            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос] [*Необязательно: Юзер]`")
-
-        await ctx.channel.purge( limit =  1 )
-
+            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
         a = '+'.join(amount.split())
-        
-        if member:
-            await ctx.send(member)
         embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
-                                   
-    @commands.command(pass_context = True,aliases=['доки','документация'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
-    async def doc(ctx):
-        content = """
-        Основа: https://discordpy.readthedocs.io/
-        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
-        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
-        API: https://discordpy.readthedocs.io/en/latest/api.html
-        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
-        """
-        embed=discord.Embed(title="Документация!", description= content, color=0xff7a0d)
-        await ctx.send(embed=embed)
-                                       
-    @commands.command()
-	async def cat(self, ctx):
-		for item in  json.loads(requests.get("https://api.thecatapi.com/v1/images/search").text):
-			embed = discord.Embed(color = discord.Color.blue())
-			embed.set_image(url = item["url"])
-			return await ctx.send(embed=embed)
-	@commands.command()
-	async def dog(self,ctx):
-		response = requests.get('https://api.thedogapi.com/v1/images/search')
-		json_data = json.loads(response.text)
-		url = json_data[0]['url']
-
-		embed = discord.Embed(title ="Вот собачка! Гаф!",color = 0xff9900)
-		embed.set_image( url = url )
-
-		await ctx.send( embed = embed )
- 
-	@commands.command()
-	async def panda(self, ctx):
-		response = requests.get('https://some-random-api.ml/img/panda')
-		jsoninf = json.loads(response.text)
-		url = jsoninf['link']
-		embed = discord.Embed(color = 0xff9900)
-		embed.set_image(url = url)
-		await ctx.send(embed = embed)
-
-	@commands.command()
-	async def bird(self, ctx):
-		response = requests.get('https://some-random-api.ml/img/birb')
-		jsoninf = json.loads(response.text)
-		url = jsoninf['link']    
-		embed = discord.Embed(color = 0xff9900)
-		embed.set_image(url = url)
-		await ctx.send(embed = embed)
-
-	@commands.command()
-	async def fox(self, ctx):
-		response = requests.get('https://some-random-api.ml/img/fox')
-		jsoninf = json.loads(response.text)
-		url = jsoninf['link']    
-		embed = discord.Embed(color = 0xff9900)
-		embed.set_image(url = url)
-		await ctx.send(embed = embed)
-
-	@commands.command()
-	async def koala(self, ctx):
-		response = requests.get('https://some-random-api.ml/img/koala')
-		jsoninf = json.loads(response.text)
-		url = jsoninf['link']    
-		embed = discord.Embed(color = 0xff9900)
-		embed.set_image(url = url)
-		await ctx.send(embed = embed)
-	@commands.command()
-	async def red_panda(self, ctx):
-		response = requests.get('https://some-random-api.ml/img/red_panda')
-		jsoninf = json.loads(response.text)
-		url = jsoninf['link']    
-		embed = discord.Embed(color = 0xff9900)
-		embed.set_image(url = url)
-		await ctx.send(embed = embed)
-
-    @commands.command(pass_context = True,aliases=['лотырея','рандомный_человек','rand_membed'],description="Это сообщение",usage="lottery")
-    async def lottery(ctx):
-        member = random.choice(ctx.guild.members)
-           ctx.send(f"{member.nick} - счастливчик")
-
-   @commands.command(aliases=['ава','ran_ava','ran_avatar'],description="Случайная ава ",usage="Выдаст рандмо аву")
-    async def ran_avatar(self, ctx): # Название команды
-        emb = discord.Embed(description= 'Вот подобраная Вам аватарка.') # Переменная ембеда и его описание
-        emb.set_image(url=nekos.img('avatar')) # Тут мы с помощью новой библиотеки ищем картинку на тему аватар и ставим её в ембед
-        await ctx.send(embed=emb)  # Отпрвака ембеда
 
 
-    @commands.command(aliases=['поцелуй'],description="Поцеловать кого-то ",usage="hug[Юзер]")
-    async def kiss(self, ctx, member : discord.Member): # Название команды и аргумент
-        if member == ctx.message.author: # Проверка кого упомянули
-            await ctx.send('Вы не можете поцеловать сами себя.')
-        else:
-            emb = discord.Embed(description= f'{member.mention}, Вас поцеловал(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
-            emb.set_image(url=nekos.img('kiss')) # Ищем картинку и ставим её в ембед
-
-            await ctx.send(embed=emb) # Отпрвака ембед
-
-            
-    
-    @commands.command(aliases=['обнять'],description="обнять кого-то ",usage="hug[юзер]")
-    async def hug(self, ctx, member : discord.Member): # Название команды и аргумент
-        if member == ctx.message.author: # Проверка кого упомянули
-            await ctx.send('Вы не можете обнять сами себя.')
-        else:
-            emb = discord.Embed(description= f'{member.mention}, Вас обнял(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
-            emb.set_image(url=nekos.img('hug')) # Ищем картинку и ставим её в ембед
-
-            await ctx.send(embed=emb) # Отпрвака ембед
-
-            
-    @commands.command(aliases=['ударить'],description="ударить кого-то ",usage="slap[юзер]")
-    async def slap(self, ctx, member : discord.Member): # Название команды и аргумент
-        if member == ctx.message.author: # Проверка кого упомянули
-            await ctx.send('Вы не можете ударить сами себя.')
-        else:
-            emb = discord.Embed(description= f'{member.mention}, Вас ударил(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
-            emb.set_image(url=nekos.img('slap')) # Ищем картинку и ставим её в ембед
-
-            await ctx.send(embed=emb) # Отпрвака ембед
-
-            
-    @commands.command(aliases=['погладить'],description="погладить кого-то ",usage="pat[юзер]")
-    async def pat(self, ctx, member : discord.Member): # Название команды и аргумент
-        if member == ctx.message.author: # Проверка кого упомянули
-            await ctx.send('Вы не можете погладить сами себя.')
-        else:
-            emb = discord.Embed(description= f'{member.mention}, Вас погладил(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
-            emb.set_image(url=nekos.img('pat')) # Ищем картинку и ставим её в ембед
-
-            await ctx.send(embed=emb) # Отпрвака ембед
-                                   
 def setup(client):
     client.add_cog(Fun(client))
