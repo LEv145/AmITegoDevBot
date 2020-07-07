@@ -342,13 +342,13 @@ class Fun(commands.Cog):
     @commands.command(aliases=['доки', 'документация'], description="Документация", usage="доки <None>")
     async def doc(self, ctx):
         content = """
-        Основа: https://discordpy.readthedocs.io/
-        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
-        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
-        API: https://discordpy.readthedocs.io/en/latest/api.html
-        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
+        Основа: https://bit.ly/2Z7FOC7
+        Минимальная инструкция по установке: https://bit.ly/3gvnF74
+        Быстрый старт: https://bit.ly/2CjesQn
+        API: https://bit.ly/3iHqJPB
+        FAQ: https://bit.ly/326Q1kn       
         """
-        embed = discord.Embed(title="Документация!", description=content, color=0xff7a0d)
+        embed = discord.Embed(title="Профессиональная документация!", description=content, color=0xff7a0d)
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["кот"], description="Выведет рандомного кота", usage="кот <None>")
