@@ -5,6 +5,7 @@ import config
 import random
 import sqlite3
 import datetime
+import nekos
 from discord.ext import commands
 
 
@@ -14,6 +15,8 @@ class Fun(commands.Cog):
         self.bot = bot
         self._last_member = None
         self.cog_name = ["Фановые"]
+        
+
 
     @commands.command(
         aliases=["рандом", "рандомайзер", "random"],
@@ -328,5 +331,56 @@ class Fun(commands.Cog):
 
         await ctx.send(embed=embed)
 
+   @commands.command(aliases=['ава','ran_ava','ran_avatar'],description="Случайная ава ",usage="Выдаст рандмо аву")
+    async def ran_avatar(self, ctx): # Название команды
+        emb = discord.Embed(description= 'Вот подобраная Вам аватарка.') # Переменная ембеда и его описание
+        emb.set_image(url=nekos.img('avatar')) # Тут мы с помощью новой библиотеки ищем картинку на тему аватар и ставим её в ембед
+        await ctx.send(embed=emb)  # Отпрвака ембеда
+
+
+    @commands.command(aliases=['поцелуй'],description="Поцеловать кого-то ",usage="hug[Юзер]")
+    async def kiss(self, ctx, member : discord.Member): # Название команды и аргумент
+        if member == ctx.message.author: # Проверка кого упомянули
+            await ctx.send('Вы не можете поцеловать сами себя.')
+        else:
+            emb = discord.Embed(description= f'{member.mention}, Вас поцеловал(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
+            emb.set_image(url=nekos.img('kiss')) # Ищем картинку и ставим её в ембед
+
+            await ctx.send(embed=emb) # Отпрвака ембед
+
+            
+    
+    @commands.command(aliases=['обнять'],description="обнять кого-то ",usage="hug[юзер]")
+    async def hug(self, ctx, member : discord.Member): # Название команды и аргумент
+        if member == ctx.message.author: # Проверка кого упомянули
+            await ctx.send('Вы не можете обнять сами себя.')
+        else:
+            emb = discord.Embed(description= f'{member.mention}, Вас обнял(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
+            emb.set_image(url=nekos.img('hug')) # Ищем картинку и ставим её в ембед
+
+            await ctx.send(embed=emb) # Отпрвака ембед
+
+            
+    @commands.command(aliases=['ударить'],description="ударить кого-то ",usage="slap[юзер]")
+    async def slap(self, ctx, member : discord.Member): # Название команды и аргумент
+        if member == ctx.message.author: # Проверка кого упомянули
+            await ctx.send('Вы не можете ударить сами себя.')
+        else:
+            emb = discord.Embed(description= f'{member.mention}, Вас ударил(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
+            emb.set_image(url=nekos.img('slap')) # Ищем картинку и ставим её в ембед
+
+            await ctx.send(embed=emb) # Отпрвака ембед
+
+            
+    @commands.command(aliases=['погладить'],description="погладить кого-то ",usage="pat[юзер]")
+    async def pat(self, ctx, member : discord.Member): # Название команды и аргумент
+        if member == ctx.message.author: # Проверка кого упомянули
+            await ctx.send('Вы не можете погладить сами себя.')
+        else:
+            emb = discord.Embed(description= f'{member.mention}, Вас погладил(а) {ctx.message.author.mention}.') # Переменная ембеда и описание
+            emb.set_image(url=nekos.img('pat')) # Ищем картинку и ставим её в ембед
+
+            await ctx.send(embed=emb) # Отпрвака ембед
+                                   
 def setup(client):
     client.add_cog(Fun(client))
