@@ -1,4 +1,4 @@
 discord.py==1.3.3
 nest_asyncio
-colorama
-asyncio
+colorama~=0.4.3
+asyncio~=3.4.3
