@@ -97,7 +97,7 @@ class Fun(commands.Cog):
     @commands.command(
         aliases=["сапер", "saper"],
         description="Сыграть в сапер",
-        usage="сапер")
+        usage="сапер <None>")
     async def sap(self, ctx):
         await ctx.message.delete() 
 
