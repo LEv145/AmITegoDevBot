@@ -22,7 +22,7 @@ class Moder(commands.Cog):
               return
         await ctx.channel.purge( limit =  (amount + 1) )
 
-        await ctx.sent(f"Удалено {amount} сообщений")
+        await ctx.send(f"Удалено {amount} сообщений")
       
 
 def setup(client):
