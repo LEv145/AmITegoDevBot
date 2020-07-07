@@ -333,6 +333,19 @@ class Fun(commands.Cog):
         embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
+                                   
+    @commands.command(pass_context = True,aliases=['доки','документация'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
+    async def doc(ctx):
+        content = """
+        Основа: https://discordpy.readthedocs.io/
+        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
+        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
+        API: https://discordpy.readthedocs.io/en/latest/api.html
+        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
+        """
+        embed=discord.Embed(title="Документация!", description= content, color=0xff7a0d)
+        await ctx.send(embed=embed)
+                                       
 
 def setup(client):
     client.add_cog(Fun(client))
