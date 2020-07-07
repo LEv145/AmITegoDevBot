@@ -8,3 +8,4 @@ __pycache__/
 
 Data/Cache/*.db
 Data/DataBase/*.db
+Data/Cache/guild_channels.db
