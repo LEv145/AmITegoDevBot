@@ -55,7 +55,8 @@ class events(commands.Cog):
 
                                 await create(category, channel)
                             except Exception as a:
-                                pass
+                                print("Ошибка в Приватках")
+                                print(a)
 
                     else:
                         await create(category, channel)
@@ -68,8 +69,9 @@ class events(commands.Cog):
                         try:
                             await before.channel.delete()
                             Set.privateChannels('0', member)
-                        except Exception:
-                            pass
+                        except Exception as a:
+                            print("Ошибка в Приватках")
+                            print(a)
 
 
 def setup(client):
