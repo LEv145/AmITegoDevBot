@@ -238,7 +238,7 @@ class Fun(commands.Cog):
         db.commit()
 
         no_one = []
-        if user != None:
+        if user:
             if user == ctx.message.author:
                 await ctx.send('Вы не можете жениться на себе')
             else:
