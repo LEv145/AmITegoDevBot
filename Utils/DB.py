@@ -59,11 +59,16 @@ class Set:
         conn = sqlite3.connect("./Data/Cache/guild_channels.db")
         cursor = conn.cursor()
 
+        if channel == '0':
+            channel = '0'
+        else:
+            channel = channel.id
+
         cursor.execute(f"SELECT * FROM privates WHERE member={member.id}")
         if cursor.fetchone():
-            cursor.execute(f"UPDATE privates SET member={member.id}, channel={channel.id} WHERE member={member.id}")
+            cursor.execute(f"UPDATE privates SET member={member.id}, channel={channel} WHERE member={member.id}")
         else:
-            cursor.execute(f"INSERT INTO privates VALUES ({channel.id}, {member.id})")
+            cursor.execute(f"INSERT INTO privates VALUES ({channel}, {member.id})")
 
         conn.commit()
         conn.close()
