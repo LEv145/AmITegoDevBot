@@ -86,7 +86,7 @@ class information(commands.Cog):
         alltext = len(ctx.guild.text_channels)
         allroles = len(ctx.guild.roles)
 
-        embed = discord.Embed(title=f"{ctx.guild.name}", color=config.color, timestamp=ctx.message.created_at)
+        embed = discord.Embed(title=f"{ctx.guild.name}", color=config.COLOR_GOOD, timestamp=ctx.message.created_at)
         embed.set_thumbnail(url=ctx.guild.icon_url)
 
         embed.add_field(name=f"Пользователей", value=f"<:user:703271496411250709> Участников: **{users}**\n"
@@ -104,7 +104,7 @@ class information(commands.Cog):
         embed.add_field(name=f"Регион сервера", value=f"{ctx.guild.region}")
         embed.add_field(name=f"Дата создания сервера", value=f"{ctx.guild.created_at.strftime('%b %#d %Y')}")
 
-        embed.set_footer(text=config.copy, icon_url=config.icon)
+        embed.set_footer(text=config.COPYRIGHT_TEXT, icon_url=config.COPYRIGHT_ICON)
         await ctx.send(embed=embed)
 
     # О боте
