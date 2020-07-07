@@ -20,3 +20,8 @@ COLOR_ERROR = # Ваш Цвет без ""
 COLOR_WARN = # Ваш Цвет без ""
 COLOR_GOOD = # Ваш Цвет без ""
 ```
+
+#### Files Tree:
+  - Data - базы данных (SQLite).
+  - Modules - модули и коги.
+  - Utils - утилиты для удобной работы с ботом.
