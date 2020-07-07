@@ -18,7 +18,8 @@ class utils(commands.Cog):
 
     @commands.command(
         aliases=['коронавирус', "covid", 'ковид'],
-        description="Информация о коронавирусе.")
+        description="Информация о коронавирусе.",
+        usage="коронавирус <Страна>")
     async def covide(self, ctx, country=None):
         if not country:
             await ctx.send(f"Введите название страны на английском языке с заглавной буквы")
@@ -41,7 +42,10 @@ class utils(commands.Cog):
 
                     return await ctx.send(embed=embed)
 
-    @commands.command(aliases=["yt"])
+    @commands.command(
+        aliases=["yt"],
+        description="Поиск на Ютуб.",
+        usage="yt <Название>")
     async def youtube(self, ctx, *, title):
         video_id = []
         sq = f'https://www.youtube.com/results?search_query={quote(title)}&sp=EgIQAQ%253D%253D'  # quote приабразуем удобочитаемасть для адресной строки
