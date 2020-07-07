@@ -1,6 +1,7 @@
 # Импорт
 import discord
 import config
+import datetime
 from discord.ext import commands
 
 
@@ -127,6 +128,7 @@ class information(commands.Cog):
         embedinfo.add_field(name="‎‎‎‎", value="‎", inline=True)
         embedinfo.add_field(name=f"Создатель Бота:", value=f"don#4170", inline=True)
         embedinfo.add_field(name=f"Бот Использует:", value=f"Python, SQLite3", inline=True)
+        embedinfo.add_field(name=f"Возраст бота:", value =f"{(datetime.datetime.now() - ctx.bot.user.created_at).days} дней" , inline=True)                
         embedinfo.add_field(name=f"Пинг Бота:", value=f"{self.bot.ws.latency * 1000:.0f} ms", inline=True)
         embedinfo.add_field(name=f"GitHub Бота:", value=f"https://github.com/DSvinka-Codes/FsokyCommBot", inline=True)
         embedinfo.set_footer(text=config.COPYRIGHT_TEXT, icon_url=config.COPYRIGHT_ICON)
