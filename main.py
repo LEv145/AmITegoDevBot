@@ -2,6 +2,8 @@ import os
 import config
 import discord
 import nest_asyncio
+nest_asyncio.apply()
+
 from loops import Loop
 from discord.ext import commands
 from colorama import Fore, Style  # Цветная консоль
@@ -15,7 +17,6 @@ COLOR_ERROR = config.COLOR_ERROR
 
 client = commands.Bot(command_prefix=PREFIX)
 client.remove_command('help')
-nest_asyncio.apply()
 init()
 
 
@@ -36,12 +37,11 @@ async def on_ready():
     print(Fore.CYAN + "===================================" + Style.RESET_ALL)
     print(" ")
 
-
-loop = Loop(client)
-try:
-    loop.activator()
-except AssertionError:
-    pass
+    loop = Loop(client)
+    try:
+        loop.activator()
+    except AssertionError:
+        pass
 
 
 @client.event
