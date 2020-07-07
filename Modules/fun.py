@@ -1,5 +1,6 @@
 # Импорт
 import discord
+import asyncio
 import config
 import random
 from discord.ext import commands
