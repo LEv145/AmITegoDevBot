@@ -319,15 +319,33 @@ class Fun(commands.Cog):
                     db.close()
 
                                    
-    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
-    async def search( ctx,*, amount: str):
+    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
+    async def search( ctx,*, amount: str, member = None):
         if not amount:
-            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
+            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос] [*Необязательно: Юзер]`")
+
+        await ctx.channel.purge( limit =  1 )
+
         a = '+'.join(amount.split())
+        
+        if member:
+            await ctx.send(member)
         embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
                                    
+    @commands.command(pass_context = True,aliases=['доки','документация'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
+    async def doc(ctx):
+        content = """
+        Основа: https://discordpy.readthedocs.io/
+        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
+        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
+        API: https://discordpy.readthedocs.io/en/latest/api.html
+        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
+        """
+        embed=discord.Embed(title="Документация!", description= content, color=0xff7a0d)
+        await ctx.send(embed=embed)
+                                       
     @commands.command()
 	async def cat(self, ctx):
 		for item in  json.loads(requests.get("https://api.thecatapi.com/v1/images/search").text):
