@@ -15,7 +15,7 @@ class Fun(commands.Cog):
         aliases=["рандом", "rand", "ранд", "рандомное_число", "rand_num"],
         description="Это сообщение",
         usage="хелп [модуль]")
-    async def rand(ctx, num1: float = 1, num2: float = 100):
+    async def random(ctx, num1: float = 1, num2: float = 100):
       if not num1 or not num2:
         await ctx.send("Пожалуйста, используйте такую кострукцию: `!!rand [первое число (начало)] [Второе число (конец)]`")
 
