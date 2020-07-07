@@ -68,17 +68,18 @@ async def on_command_error(ctx, error):
 
 @client.event
 async def on_message(message):
-    if message.guild:
-        mute_role = discord.utils.get(message.guild.roles, name="Muted")
-        if mute_role in message.author.roles:
-            await message.delete()
+    if message.author.bot:
+        if message.guild:
+            mute_role = discord.utils.get(message.guild.roles, name="Muted")
+            if mute_role in message.author.roles:
+                await message.delete()
+            else:
+                await client.process_commands(message)
         else:
-            await client.process_commands(message)
-    else:
-        try:
-            await message.author.send("Не пиши мне в лс <:blya_placat_budu:707670077926932520>")
-        except Exception:
-            pass
+            try:
+                await message.author.send("Не пиши мне в лс <:blya_placat_budu:707670077926932520>")
+            except Exception:
+                pass
 
 
 for filename in os.listdir('./Modules'):
