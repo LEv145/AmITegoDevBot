@@ -72,7 +72,8 @@ class information(commands.Cog):
 
     @commands.command(
         aliases=['сервер', 'серверинфо'],
-        description="Информация о сервере")
+        description="Информация о сервере",
+        usage="сервер <None>")
     async def server(self, ctx):
 
         members = ctx.guild.members
@@ -110,7 +111,8 @@ class information(commands.Cog):
     # О боте
     @commands.command(
         aliases=['бот', 'bot', 'инфо', "информация"],
-        description="Информация о боте.")
+        description="Информация о боте.",
+        usage="бот <None>")
     async def bote(self, ctx):
         members = 0
         for guild in self.bot.guilds:
