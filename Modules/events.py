@@ -25,34 +25,51 @@ class events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
-        Get = DB.Get()
-        Set = DB.Set()
-        if after.channel:
-            channel = Get.options("channels")[0]
-            category = Get.options("category")[0]
 
+        async def create(category, channel):
             if int(after.channel.id) == int(channel):
                 cat = discord.utils.get(member.guild.categories, id=int(category))
-                channel2 = await member.guild.create_voice_channel(name=f"{member.name}#{member.discriminator}",
-                                                                   category=cat)
+                channel2 = await member.guild.create_voice_channel(
+                    name=f"{member.name}#{member.discriminator}",
+                    category=cat)
                 await member.move_to(channel2)
                 await channel2.set_permissions(member, manage_channels=True)
                 Set.privateChannels(channel2, member)
 
-            elif before.channel:
-                if str(before.channel.id) in str(Get.privateChannels(member)[0]):
-                    try:
-                        await before.channel.delete()
-                    except Exception:
-                        pass
+        Get = DB.Get()
+        Set = DB.Set()
 
+        if after.channel:
+            channel = Get.options("channels")[0]
+            category = Get.options("category")[0]
+
+            if Get.privateChannels(member):
+                if Get.privateChannels(member)[0] == '0':
+                    await create(category, channel)
+                else:
+                    if before.channel:
+                        if str(before.channel.id) in str(Get.privateChannels(member)[0]):
+                            try:
+                                await before.channel.delete()
+                                Set.privateChannels('0', member)
+
+                                await create(category, channel)
+                            except Exception as a:
+                                pass
+
+                    else:
+                        await create(category, channel)
+            else:
+                await create(category, channel)
         else:
             if before.channel:
-                if str(before.channel.id) in str(Get.privateChannels(member)[0]):
-                    try:
-                        await before.channel.delete()
-                    except Exception:
-                        pass
+                if Get.privateChannels(member) and Get.privateChannels(member) != '0':
+                    if str(before.channel.id) in str(Get.privateChannels(member)[0]):
+                        try:
+                            await before.channel.delete()
+                            Set.privateChannels('0', member)
+                        except Exception:
+                            pass
 
 
 def setup(client):

@@ -1,10 +1,11 @@
 # Импорт
 import discord
 import asyncio
-import config
 import random
 import sqlite3
 import datetime
+import requests
+import json
 from discord.ext import commands
 
 
@@ -93,21 +94,25 @@ class Fun(commands.Cog):
             e.add_field(name="Проблема:", value="Введено не цельное число!")
             e.add_field(name="Решение:", value="Введите цельное число!", inline=False)
             await ctx.send(embed=e)
-   
-    @commands.command(
-        aliases=["сапер", "saper"],
-        description="Сыграть в сапер",
-        usage="сапер")
-    async def sap(self, ctx):
-        await ctx.message.delete() 
 
-        r_list = ['🟩','🟧','🟥']
+    @commands.command(
+        aliases=["сапер", "sap", "saper"],
+        description="Сыграть в сапер",
+        usage="сапер <None>")
+    async def sap(self, ctx):
+        await ctx.message.delete()
+
+        r_list = ['🟩', '🟧', '🟥']
+
+        rows = None
+        columns = None
 
         msg = await ctx.send(f'Выберете сложность :\n\n{r_list[0]}— Easy\n{r_list[1]}— Medium\n{r_list[2]}— Hard')
         for r in r_list:
             await msg.add_reaction(r)
         try:
-            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
+            react, user = await self.bot.wait_for('reaction_add', timeout=30.0, check=lambda react,
+                                                                                             user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
         except Exception:
             await msg.delete()
         else:
@@ -125,8 +130,8 @@ class Fun(commands.Cog):
                 await msg.clear_reactions()
             else:
                 await msg.delete()
-                await ctx.send('Неверная реакция!', delete_after= 10.0)
-            
+                await ctx.send('Неверная реакция!', delete_after=10.0)
+
         bombs = columns * rows - 1
         bombs = bombs / 2.5
         bombs = round(random.randint(5, round(bombs)))
@@ -134,8 +139,8 @@ class Fun(commands.Cog):
         columns = int(columns)
         rows = int(rows)
         bombs = int(bombs)
-        
-        grid = [[0 for num in range (columns)] for num in range(rows)]
+
+        grid = [[0 for num in range(columns)] for num in range(rows)]
 
         loop_count = 0
         while loop_count < bombs:
@@ -155,13 +160,12 @@ class Fun(commands.Cog):
 
             adj_sum = 0
 
-            for (adj_y, adj_x) in [(0,1),(0,-1),(1,0),(-1,0),(1,1),(-1,1),(1,-1),(-1,-1)]:
+            for (adj_y, adj_x) in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, 1), (1, -1), (-1, -1)]:
 
                 try:
                     if grid[adj_y + pos_y][adj_x + pos_x] == 'B' and adj_y + pos_y > -1 and adj_x + pos_x > -1:
-
                         adj_sum = adj_sum + 1
-                except Exception as error:
+                except Exception:
                     pass
 
             if grid[pos_y][pos_x] != 'B':
@@ -177,7 +181,7 @@ class Fun(commands.Cog):
 
         for the_rows in grid:
             not_final.append(''.join(map(str, the_rows)))
-            
+
         not_final = '\n'.join(not_final)
 
         not_final = not_final.replace('0', '||:zero:||')
@@ -197,7 +201,7 @@ class Fun(commands.Cog):
         percentage = round(percentage, 2)
 
         emb = discord.Embed(
-            description= final,
+            description=final,
             color=0xC0C0C0
         )
         emb.add_field(
@@ -220,10 +224,10 @@ class Fun(commands.Cog):
             value=bombs,
             inline=True
         )
-        await msg.edit(embed= emb, content= None)
+        await msg.edit(embed=emb, content=None)
 
     @commands.command(
-        aliases=["поженится"],
+        aliases=["поженится", "marry"],
         description="Поженится с юзером",
         usage="поженится <Пользователь>")
     async def marry(self, ctx, user: discord.User = None):
@@ -288,7 +292,7 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(
-        aliases=["развестись"],
+        aliases=["развестись", "divorce"],
         description="Развестить с пользователем",
         usage="развестись <Пользователь>")
     async def divorce(self, ctx):
@@ -318,15 +322,117 @@ class Fun(commands.Cog):
                     await ctx.send('Вы отменили команду.')
                     db.close()
 
-                                   
-    @commands.command(aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
-    async def search(self, ctx,*, amount: str):
+    @commands.command(aliases=['поиск', 'g', 'google', 'читай'], description="Бот загуглить вместо тебя",
+                      usage="search <интернет запрос> [Юзер]")
+    async def search(self, ctx, *, amount: str, member=None):
         if not amount:
-            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
+            await ctx.send(
+                "Пожалуйста, используйте такую кострукцию: `!!search [запрос] [Юзер]`")
+
+        await ctx.channel.purge(limit=1)
+
         a = '+'.join(amount.split())
-        embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
+
+        if member:
+            await ctx.send(member)
+        embed = discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
+
+    @commands.command(aliases=['доки', 'документация'], description="Документация", usage="доки <None>")
+    async def doc(self, ctx):
+        content = """
+        Основа: https://discordpy.readthedocs.io/
+        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
+        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
+        API: https://discordpy.readthedocs.io/en/latest/api.html
+        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
+        """
+        embed = discord.Embed(title="Документация!", description=content, color=0xff7a0d)
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=["кот"], description="Выведет рандомного кота", usage="кот <None>")
+    async def cat(self, ctx):
+        for item in json.loads(requests.get("https://api.thecatapi.com/v1/images/search").text):
+            embed = discord.Embed(color=discord.Color.blue())
+            embed.set_image(url=item["url"])
+            await ctx.send(embed=embed)
+            break
+
+    @commands.command(aliases=["собака"], description="Выведет рандомную собаку", usage="собака <None>")
+    async def dog(self, ctx):
+        response = requests.get('https://api.thedogapi.com/v1/images/search')
+        json_data = json.loads(response.text)
+        url = json_data[0]['url']
+
+        embed = discord.Embed(title="Вот собачка! Гаф!", color=0xff9900)
+        embed.set_image(url=url)
+
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=["панда"], description="Выведет рандомную панду", usage="панда <None>")
+    async def panda(self, ctx):
+        response = requests.get('https://some-random-api.ml/img/panda')
+        jsoninf = json.loads(response.text)
+        url = jsoninf['link']
+        embed = discord.Embed(color=0xff9900)
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+
+    @commands.command(
+        aliases=["птица"],
+        description="Выведет рандомную птицу",
+        usage="птица <None>")
+    async def bird(self, ctx):
+        response = requests.get('https://some-random-api.ml/img/birb')
+        jsoninf = json.loads(response.text)
+        url = jsoninf['link']
+        embed = discord.Embed(color=0xff9900)
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+
+    @commands.command(
+        aliases=["лиса"],
+        description="Выведет рандомную лиск",
+        usage="лиса <None>")
+    async def fox(self, ctx):
+        response = requests.get('https://some-random-api.ml/img/fox')
+        jsoninf = json.loads(response.text)
+        url = jsoninf['link']
+        embed = discord.Embed(color=0xff9900)
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+
+    @commands.command(
+        aliases=["коала"],
+        description="Выведет рандомную коалу",
+        usage="коала <None>")
+    async def koala(self, ctx):
+        response = requests.get('https://some-random-api.ml/img/koala')
+        jsoninf = json.loads(response.text)
+        url = jsoninf['link']
+        embed = discord.Embed(color=0xff9900)
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+
+    @commands.command(
+        aliases=["красная_панда"],
+        description="Выведет рандомную красную панду",
+        usage="красная_панда <None>"
+    )
+    async def red_panda(self, ctx):
+        response = requests.get('https://some-random-api.ml/img/red_panda')
+        jsoninf = json.loads(response.text)
+        url = jsoninf['link']
+        embed = discord.Embed(color=0xff9900)
+        embed.set_image(url=url)
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=['лотерея', 'рандомный_человек', 'rand_membed'], description="Лотерея на всём сервере",
+                      usage="лотерея <None>")
+    async def lottery(self, ctx):
+        member = random.choice(ctx.guild.members)
+        ctx.send(f"{member.display_name} - счастливчик")
 
 
 def setup(client):
