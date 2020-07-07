@@ -95,7 +95,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
    
     @commands.command(
-        aliases=["сапер", "sap", "saper"],
+        aliases=["сапер", "saper"],
         description="Сыграть в сапер",
         usage="сапер")
     async def sap(self, ctx):
@@ -107,7 +107,7 @@ class Fun(commands.Cog):
         for r in r_list:
             await msg.add_reaction(r)
         try:
-            react, user = await self.Bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
+            react, user = await self.bot.wait_for('reaction_add', timeout= 30.0, check= lambda react, user: user == ctx.author and react.message.channel == ctx.channel and react.emoji in r_list)
         except Exception:
             await msg.delete()
         else:
@@ -223,7 +223,7 @@ class Fun(commands.Cog):
         await msg.edit(embed= emb, content= None)
 
     @commands.command(
-        aliases=["поженится", "marry"],
+        aliases=["поженится"],
         description="Поженится с юзером",
         usage="поженится <Пользователь>")
     async def marry(self, ctx, user: discord.User = None):
@@ -288,7 +288,7 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(
-        aliases=["развестись", "divorce"],
+        aliases=["развестись"],
         description="Развестить с пользователем",
         usage="развестись <Пользователь>")
     async def divorce(self, ctx):
@@ -320,13 +320,14 @@ class Fun(commands.Cog):
 
                                    
     @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
-    async def search( ctx,*, amount: str):
+    async def search(self, ctx,*, amount: str):
         if not amount:
             await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
         a = '+'.join(amount.split())
         embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(Fun(client))
