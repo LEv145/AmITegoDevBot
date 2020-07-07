@@ -12,8 +12,11 @@ class Fun(commands.Cog):
         self._last_member = None
         self.cog_name = ["Фановые"]
 
-    @commands.command(aliases=["рандом", "randomizer", "random"])
-	async def рандомайзер(self, ctx, number1=None, number2=None):
+    @commands.command(
+	    aliases=["рандом", "randomizer", "random"],
+		description="Рандомайзер",
+		usage="рандом [первое число] [второй число]")
+	async def рандомайзер(self, ctx, number1=1, number2=100):
 		await ctx.message.delete()
 		try:
 			if not number1:
