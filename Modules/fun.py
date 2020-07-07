@@ -328,5 +328,10 @@ class Fun(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @commands.command(pass_context = True,aliases=['лотырея','рандомный_человек','rand_membed'],description="Это сообщение",usage="lottery")
+    async def lottery(ctx):
+        member = random.choice(ctx.guild.members)
+           ctx.send(f"{member.nick} - счастливчик")
+
 def setup(client):
     client.add_cog(Fun(client))
