@@ -238,7 +238,7 @@ class Fun(commands.Cog):
         db.commit()
 
         no_one = []
-        if user != None:
+        if user:
             if user == ctx.message.author:
                 await ctx.send('Вы не можете жениться на себе')
             else:
@@ -319,7 +319,7 @@ class Fun(commands.Cog):
                     db.close()
 
                                    
-    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
+    @commands.command(aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
     async def search(self, ctx,*, amount: str):
         if not amount:
             await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
