@@ -31,7 +31,7 @@ class information(commands.Cog):
 
         if not name:
             embed = discord.Embed(
-                description=f"{ctx.author.display_name}, Чтоб узнать список команд пропишите !!хелп <модуль>\n"
+                description=f"{ctx.author.display_name}, Чтоб узнать список команд пропишите {config.PREFIX}хелп <модуль>\n"
                             f"**Доступные модули:** {', '.join(cogs)}")
             await ctx.send(embed=embed)
         else:
@@ -66,8 +66,8 @@ class information(commands.Cog):
 
             else:
                 embed = discord.Embed(
-                    description=f"{ctx.author.display_name}, Модуль не найден!\nЧтоб узнать список команд пропишите !!хелп <модуль>\n"
-                                f"**Доступные модули:** {''.join(cogs)}")
+                    description=f"{ctx.author.display_name}, Модуль не найден!\nЧтоб узнать список команд пропишите {config.PREFIX}хелп <модуль>\n"
+                                f"**Доступные модули:** {', '.join(cogs)}")
                 await ctx.send(embed=embed)
 
     @commands.command(
