@@ -319,11 +319,17 @@ class Fun(commands.Cog):
                     db.close()
 
                                    
-    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
-    async def search( ctx,*, amount: str):
+    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос] [*Необязательно: Юзер]")
+    async def search( ctx,*, amount: str, member = None):
         if not amount:
-            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
+            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос] [*Необязательно: Юзер]`")
+
+        await ctx.channel.purge( limit =  1 )
+
         a = '+'.join(amount.split())
+        
+        if member:
+            await ctx.send(member)
         embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
         await ctx.send(embed=embed)
