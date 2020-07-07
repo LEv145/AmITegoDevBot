@@ -94,8 +94,9 @@ class Moder(commands.Cog):
                 color=0x0c0c0c))
 
     @commands.command(
-        aliases=["Пред", "пред", "Варн", "варн", "Warn"],
-        description="Выдать предупреждение юзеру")
+        aliases=["пред", "Пред", "Варн", "варн", "Warn"],
+        description="Выдать предупреждение юзеру",
+        usage="пред <юзер> <причина>")
     @commands.has_permissions(kick_members=True)
     async def warn(self, ctx, member: discord.Member, *, arg):
         ids = DB.Set().warns("add", member, ctx.author, arg)
@@ -148,7 +149,7 @@ class Moder(commands.Cog):
         a = []
 
         for i in DB.Get().warns(member):
-            a.append(f"`ID - {i['id']}` | Модератор - {i['moderator']} | Причина - {i['reason']}\n")
+            a.append(f"`ID - {i[0]}` | Модератор - {ctx.guild.get_member(int(i[2]))} | Причина - {i[3]}\n")
 
         if not a:
             a = ["Юзер не имеет варнов"]

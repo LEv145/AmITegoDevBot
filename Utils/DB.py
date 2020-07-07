@@ -101,26 +101,31 @@ class Set:
         conn.close()
 
     def warns(self, mode, member, moderator, *reason):
-        conn = sqlite3.connect("./Data/DataBase/members_mutes.db")
+        conn = sqlite3.connect("./Data/DataBase/members_warns.db")
         cursor = conn.cursor()
 
         if mode == "add":
             ids = 0
             for i in cursor.execute(f"SELECT * FROM warns WHERE member={member.id} ORDER BY ID DESC").fetchall():
-                if not i["id"]:
+                if not i[0]:
                     ids = 1
                     break
                 else:
-                    ids = i["id"] + 1
+                    ids = i[0] + 1
                     break
 
-            cursor.execute(f"INSERT INTO warns VALUES ({ids}, {member.id}, {moderator}, {reason[0]}")
+            cursor.execute(f"INSERT INTO warns VALUES ({ids}, {member.id}, {moderator.id}, '{reason[0]}')")
+
+            conn.commit()
+            conn.close()
+
             return ids
 
         if mode == "remove":
             cursor.execute(f"DELETE FROM warns WHERE ID = {moderator}")
 
-        conn.commit()
+            conn.commit()
+            conn.close()
         conn.close()
 
 
