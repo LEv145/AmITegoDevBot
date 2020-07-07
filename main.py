@@ -68,7 +68,7 @@ async def on_command_error(ctx, error):
 
 @client.event
 async def on_message(message):
-    if message.author.bot:
+    if not message.author.bot:
         if message.guild:
             mute_role = discord.utils.get(message.guild.roles, name="Muted")
             if mute_role in message.author.roles:

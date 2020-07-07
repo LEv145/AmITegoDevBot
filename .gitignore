@@ -6,4 +6,5 @@ config.py
 __pycache__/
 .idea/
 
-*.db
+Data/Cache/*.db
+Data/DataBase/*.db
