@@ -24,14 +24,7 @@ class Moder(commands.Cog):
 
         await ctx.send(f"Удалено {amount} сообщений")
 
-    @commands.command(pass_context = True,aliases=['поиск','g','google','читай'],description="Это сообщение",usage="search [интернет запрос]")
-    async def search( ctx,*, amount: str):
-        if not amount:
-            await ctx.send("Пожалуйста, используйте такую кострукцию: `!!search [интернет запрос]`")
-        a = '+'.join(amount.split())
-        embed=discord.Embed(title=f"{amount}", url=f'https://google.gik-team.com/?q={a}', color=0xff7a0d)
 
-        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(Moder(client))
