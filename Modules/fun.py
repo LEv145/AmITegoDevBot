@@ -96,7 +96,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
 
     @commands.command(
-        aliases=["сапер", "sap", "saper"],
+        aliases=["сапер", "saper"],
         description="Сыграть в сапер",
         usage="сапер <None>")
     async def sap(self, ctx):
@@ -227,7 +227,7 @@ class Fun(commands.Cog):
         await msg.edit(embed=emb, content=None)
 
     @commands.command(
-        aliases=["поженится", "marry"],
+        aliases=["поженится"],
         description="Поженится с юзером",
         usage="поженится <Пользователь>")
     async def marry(self, ctx, user: discord.User = None):
@@ -292,7 +292,7 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(
-        aliases=["развестись", "divorce"],
+        aliases=["развестись"],
         description="Развестить с пользователем",
         usage="развестись <Пользователь>")
     async def divorce(self, ctx):
