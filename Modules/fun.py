@@ -323,14 +323,22 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(aliases=['поиск', 'g', 'google', 'читай'], description="Бот загуглить вместо тебя",
-                      usage="search <интернет запрос> [Юзер]")
-    async def search(self, ctx, *, amount: str, member=None):
+                      usage="search <интернет запрос> | [Юзер]")
+    async def search(self, ctx, *, amount: str):
+        member=None
         if not amount:
             await ctx.send(
-                "Пожалуйста, используйте такую кострукцию: `!!search [запрос] [Юзер]`")
+                "Пожалуйста, используйте такую кострукцию: `!!search [запрос] | [Юзер]`")
 
         await ctx.channel.purge(limit=1)
-
+        
+        list_ = amount.split('|')
+        
+        if len(list_) >= 2:
+            member = list_[-1]
+            del list_[-1]
+                     
+        amount = '|'.join(list_)
         a = '+'.join(amount.split())
 
         if member:
