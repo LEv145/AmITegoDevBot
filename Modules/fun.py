@@ -441,6 +441,15 @@ class Fun(commands.Cog):
     async def lottery(self, ctx):
         member = random.choice(ctx.guild.members)
         ctx.send(f"{member.display_name} - счастливчик")
+                                   
+
+    @commands.command(aliases=['порно'], description="Ахаха",
+                      usage="porno <None>")
+    async def porno(self, ctx):
+    # Fake potno :3 Lol!11!21
+    embed = discord.Embed(title="Fake porno :3 Lol!11!21",color=0xff9900)
+    embed.set_image(url="https://avatars.mds.yandex.net/get-pdb/1583023/6392f760-b6ba-4361-9640-d23bb59581f9/s1200?webp=false")
+    await ctx.send(embed=embed)
 
 
 def setup(client):
