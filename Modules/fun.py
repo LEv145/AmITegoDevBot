@@ -444,7 +444,7 @@ class Fun(commands.Cog):
 
 
     @commands.command(aliases=["кнб", "камень_ножницы_бумага"],description='Игра в камень-ножницы-бумага',usage='кнб <камень/ножницы/бумага>')
-    async def rsp(self,ctx):
+    async def rsp(self,ctx, mess):
         robot = ['Камень', 'Ножницы', 'Бумага']
         if mess == "Камень" or mess == "К" or mess == "камень" or mess == "к":
             robot_choice = random.choice(robot)
