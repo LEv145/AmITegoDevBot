@@ -432,7 +432,7 @@ class Fun(commands.Cog):
                       usage="лотерея <None>")
     async def lottery(self, ctx):
         member = random.choice(ctx.guild.members)
-        ctx.send(f"{member.display_name} - счастливчик")
+        await ctx.send(f"{member.display_name} - счастливчик")
 
 
 def setup(client):
