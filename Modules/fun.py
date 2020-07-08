@@ -444,21 +444,20 @@ class Fun(commands.Cog):
                                    
     @commands.command(aliases=["монетка" 'орел_решка','о_р','орёл_решка'],description='Бот подбрасывает монетку',usage='монетка <None>')
     async def o_r(self, ctx):
-        robot = ("орёл", "решка")
+        robot = ["орёл", "решка"]
         robot_choice = random.choice(robot)
+                                   
+        emb = discord.Embed(title="Орел или решка", colour=discord.Colour.red(), timestamp=ctx.message.created_at)
+        emb.set_author(name="⠀", icon_url="https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2139-thumb.png")
+        emb.set_footer(text='Команда вызвана: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
+                                   
         if robot_choice == "орёл":
-            emb = discord.Embed(title="Орел или решка", colour=discord.Colour.red(), timestamp=ctx.message.created_at)
             emb.add_field(name="Подбрасываем монетку....", value="**Орёл**")
-            emb.set_author(name="⠀", icon_url="https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2139-thumb.png")
-            emb.set_footer(text='Команда вызвана: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=emb)
 
         if robot_choice == "решка":
-            emb = discord.Embed(title="Орел или решка", colour=discord.Colour.red(), timestamp=ctx.message.created_at)
             emb.add_field(name="Подбрасываем монетку....", value="**Решка**")
-            emb.set_author(name="⠀", icon_url="https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2139-thumb.png")
-            emb.set_footer(text='Команда вызвана: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=emb)
+
+        await ctx.send(embed=emb)
                                    
 
     @commands.command(aliases=["кнб", "камень_ножницы_бумага"],description='Игра в камень-ножницы-бумага',usage='кнб <камень/ножницы/бумага>')
@@ -511,6 +510,7 @@ class Fun(commands.Cog):
                 out["icon"] = "✂"     
         else:
             await ctx.send("Ошибка!")
+            return
                 
         if win == "Вы выиграли!":
             out["img"] = "https://im0-tub-ru.yandex.net/i?id=12af96d2422023b2e8c0854c6960d229&n=13&exp=1"
