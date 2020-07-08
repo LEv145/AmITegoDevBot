@@ -15,13 +15,14 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         try:
-            if message.channel.id in DB.Get().options("channels")["reactions"]:
+            if str(message.channel.id) in DB.Get().options("channels")[1]:
                 like = self.bot.get_emoji(671667959617552386)
                 dislike = self.bot.get_emoji(671667959386603520)
                 await message.add_reaction(like)
                 await message.add_reaction(dislike)
-        except Exception:
-            pass
+        except Exception as a:
+            print("ERROR")
+            print(a)
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
