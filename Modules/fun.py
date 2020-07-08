@@ -464,68 +464,64 @@ class Fun(commands.Cog):
     @commands.command(aliases=["кнб", "камень_ножницы_бумага"],description='Игра в камень-ножницы-бумага',usage='кнб <камень/ножницы/бумага>')
     async def rsp(self,ctx, mess):
         robot = ['Камень', 'Ножницы', 'Бумага']
-        if mess == "Камень" or mess == "К" or mess == "камень" or mess == "к":
-            robot_choice = random.choice(robot)
-            emb = discord.Embed(title=robot_choice, colour=discord.Colour.red(), timestamp=ctx.message.created_at)
+        stone_list = ["stone", "камень","к"]
+        paper_list = ["paper", "бумага", "б"]
+        scissors_list = ["scissors", "ножницы","н"]  
+                                   
+        out = {"icon": None, "value": None, "img": None}
+                                   
+        robot_choice = random.choice(robot)  
+                                   
+        win_list = ["Вы выиграли!","Вы проиграли :с", "Ничья!"]
+            
+        # Embed
+        emb = discord.Embed(title=robot_choice, colour=discord.Colour.red(), timestamp=ctx.message.created_at)
+                                   
+        if mess.lower() in stone_list:       
             if robot_choice == 'Ножницы':
-                emb.add_field(name='✂', value='Вы выиграли!')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.pngitem.com/pimgs/m/173-1731373_employee-motivation-through-positivity-win-icon-png-transparent.png")
-                emb.set_footer(text='Команда вызвана: {}'.format(
-                    ctx.author.name), icon_url=ctx.author.avatar_url)
+                win = win_list[0]
+                out["icon"] = "✂"
             elif robot_choice == 'Бумага':
-                emb.add_field(name='📜', value='Вы проиграли :с')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.kindpng.com/picc/m/172-1725279_you-lose-graphic-you-lost-icon-hd-png.png")
-                emb.set_footer(text='Команда вызвана: {}'.format(
-                    ctx.author.name), icon_url=ctx.author.avatar_url)
+                win = win_list[1]
+                out["icon"] = "🧻"
             else:
-                emb.add_field(name='🗿', value='Ничья!')
-                emb.set_author(name="⠀",
-                               icon_url="https://png.pngtree.com/png-clipart/20190612/original/pngtree-cartoon-hand-shake-png-image_3394981.jpg")
-                emb.set_footer(text='Команда вызвана: {}'.format(
-                    ctx.author.name), icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=emb)
+                win = win_list[2]
+                out["icon"] = "🥔"
 
         elif mess == "Бумага" or mess == "Б" or mess == "бумага" or mess == "б":
-            robot_choice = random.choice(robot)
-            emb = discord.Embed(title=robot_choice, colour=discord.Colour.red(), timestamp=ctx.message.created_at)
-            if robot_choice == 'Ножницы':
-                emb.add_field(name='✂', value='Вы проиграли :с')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.kindpng.com/picc/m/172-1725279_you-lose-graphic-you-lost-icon-hd-png.png")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
-            elif robot_choice == 'Камень':
-                emb.add_field(name='🗿', value='Вы выиграли!')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.pngitem.com/pimgs/m/173-1731373_employee-motivation-through-positivity-win-icon-png-transparent.png")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
+            if robot_choice == 'Камень':
+                win = win_list[0]
+                out["icon"] = "🥔"     
+            elif robot_choice == 'Ножницы':
+                win = win_list[1]
+                out["icon"] = "✂"             
             else:
-                emb.add_field(name='📜', value='Ничья!')
-                emb.set_author(name="⠀",
-                               icon_url="https://png.pngtree.com/png-clipart/20190612/original/pngtree-cartoon-hand-shake-png-image_3394981.jpg")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=emb)
+                win = win_list[2]
+                out["icon"] = "🧻"               
 
         elif mess == "Ножницы" or mess == "Н" or mess == "ножницы" or mess == "н":
-            robot_choice = random.choice(robot)
-            emb = discord.Embed(title=robot_choice, colour=discord.Colour.red(), timestamp=ctx.message.created_at)
             if robot_choice == 'Бумага':
-                emb.add_field(name='📜', value='Вы выиграли!')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.pngitem.com/pimgs/m/173-1731373_employee-motivation-through-positivity-win-icon-png-transparent.png")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
+                win = win_list[0]
+                out["icon"] = "🧻"               
             elif robot_choice == 'Камень':
-                emb.add_field(name='🗿', value='Вы проиграли :с')
-                emb.set_author(name="⠀",
-                               icon_url="https://www.kindpng.com/picc/m/172-1725279_you-lose-graphic-you-lost-icon-hd-png.png")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
+                win = win_list[1]
+                out["icon"] = "🥔"                
             else:
-                emb.add_field(name='✂', value='Ничья!')
-                emb.set_author(name="⠀",
-                               icon_url="https://png.pngtree.com/png-clipart/20190612/original/pngtree-cartoon-hand-shake-png-image_3394981.jpg")
-                emb.set_footer(icon_url=ctx.author.avatar_url)
-            await ctx.send(embed=emb)
+                win = win_list[2]  
+                out["icon"] = "✂"                 
+                
+        if win == "Вы выиграли!":
+            out["img"] = "https://im0-tub-ru.yandex.net/i?id=12af96d2422023b2e8c0854c6960d229&n=13&exp=1"
+        elif win == "Вы проиграли :с":
+            out["img"] = "https://thumbs.dreamstime.com/b/%D0%BF%D0%BE%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-87995106.jpg"
+        else:
+            out["img"] = "https://avatanplus.com/files/resources/original/574454ca56620154e2eb3672.png"
+                                   
+        emb.add_field(name=out["icon"], value=win)
+        emb.set_author(name="⠀",
+        icon_url=out["img"])
+        emb.set_footer(icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=emb)
 
 
 def setup(client):
