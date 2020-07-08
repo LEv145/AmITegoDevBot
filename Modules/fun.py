@@ -525,6 +525,14 @@ class Fun(commands.Cog):
         emb.set_footer(icon_url=ctx.author.avatar_url)
         await ctx.send(embed=emb)
 
-
+                                   
+    @commands.command(aliases=['порно'], description="Ахаха",
+                      usage="porno <None>")
+    async def porno(self, ctx):
+         # Fake potno :3 Lol!11!21
+         embed = discord.Embed(title="Fake porno :3 Lol!11!21",color=0xff9900)
+         embed.set_image(url="https://avatars.mds.yandex.net/get-pdb/1583023/6392f760-b6ba-4361-9640-d23bb59581f9/s1200?webp=false")
+         await ctx.send(embed=embed)
+                                   
 def setup(client):
     client.add_cog(Fun(client))
