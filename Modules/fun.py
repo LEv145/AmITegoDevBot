@@ -442,6 +442,26 @@ class Fun(commands.Cog):
         member = random.choice(ctx.guild.members)
         await ctx.send(f"{member.display_name} - счастливчик")
 
+                                   
+    @commands.command(aliases=['орел_решка','о_р','орёл_решка'],description='Бот подбрасывает монетку',usage='орел_решка <None>')
+    async def o_r(self,ctx):
+    robot = ("орёл", "решка")
+    robot_choice = random.choice(robot)
+    if robot_choice == "орёл":
+        emb = discord.Embed(title="Орел или решка", colour=discord.Colour.red(), timestamp=ctx.message.created_at)
+        emb.add_field(name="Подбрасываем монетку....", value="**Орёл**")
+        emb.set_author(name="⠀", icon_url="https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2139-thumb.png")
+        emb.set_footer(text='Команда вызвана: {}'.format(
+                ctx.author.name), icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=emb)
+
+    if robot_choice == "решка":
+        emb = discord.Embed(title="Орел или решка", colour=discord.Colour.red(), timestamp=ctx.message.created_at)
+        emb.add_field(name="Подбрасываем монетку....", value="**Решка**")
+        emb.set_author(name="⠀", icon_url="https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2139-thumb.png")
+        emb.set_footer(text='Команда вызвана: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
+        await ctx.send(embed=emb)
+                                   
 
 def setup(client):
     client.add_cog(Fun(client))

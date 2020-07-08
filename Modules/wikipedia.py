@@ -96,7 +96,7 @@ class BotWikipedia(commands.Cog):
         await ctx.send(embed=e)
 
     @commands.command(
-        aliases=["изображение_дня", "изображения", "day_image"],
+        aliases=["изображение_дня", "изображения", "day_image", "изображение"],
         description="показывает изображение дня",
         usage="изображение <None>"
     )
