@@ -488,7 +488,7 @@ class Fun(commands.Cog):
                 win = win_list[2]
                 out["icon"] = "🥔"
 
-        elif mess == "Бумага" or mess == "Б" or mess == "бумага" or mess == "б":
+        elif mess.lower() in paper_list:
             if robot_choice == 'Камень':
                 win = win_list[0]
                 out["icon"] = "🥔"     
@@ -499,7 +499,7 @@ class Fun(commands.Cog):
                 win = win_list[2]
                 out["icon"] = "🧻"               
 
-        elif mess == "Ножницы" or mess == "Н" or mess == "ножницы" or mess == "н":
+        elif mess.lower() in scissors_list:
             if robot_choice == 'Бумага':
                 win = win_list[0]
                 out["icon"] = "🧻"               
@@ -508,7 +508,9 @@ class Fun(commands.Cog):
                 out["icon"] = "🥔"                
             else:
                 win = win_list[2]  
-                out["icon"] = "✂"                 
+                out["icon"] = "✂"     
+        else:
+            await ctx.send("Ошибка!")
                 
         if win == "Вы выиграли!":
             out["img"] = "https://im0-tub-ru.yandex.net/i?id=12af96d2422023b2e8c0854c6960d229&n=13&exp=1"
