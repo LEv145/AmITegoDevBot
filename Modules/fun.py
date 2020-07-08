@@ -96,7 +96,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
 
     @commands.command(
-        aliases=["сапер", "sap", "saper"],
+        aliases=["сапер", "saper"],
         description="Сыграть в сапер",
         usage="сапер <None>")
     async def sap(self, ctx):
@@ -227,7 +227,7 @@ class Fun(commands.Cog):
         await msg.edit(embed=emb, content=None)
 
     @commands.command(
-        aliases=["поженится", "marry"],
+        aliases=["поженится"],
         description="Поженится с юзером",
         usage="поженится <Пользователь>")
     async def marry(self, ctx, user: discord.User = None):
@@ -292,7 +292,7 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(
-        aliases=["развестись", "divorce"],
+        aliases=["развестись"],
         description="Развестить с пользователем",
         usage="развестись <Пользователь>")
     async def divorce(self, ctx):
@@ -323,14 +323,22 @@ class Fun(commands.Cog):
                     db.close()
 
     @commands.command(aliases=['поиск', 'g', 'google', 'читай'], description="Бот загуглить вместо тебя",
-                      usage="search <интернет запрос> [Юзер]")
-    async def search(self, ctx, *, amount: str, member=None):
+                      usage="search <интернет запрос> | [Юзер]")
+    async def search(self, ctx, *, amount: str):
+        member=None
         if not amount:
             await ctx.send(
-                "Пожалуйста, используйте такую кострукцию: `!!search [запрос] [Юзер]`")
+                "Пожалуйста, используйте такую кострукцию: `!!search [запрос] | [Юзер]`")
 
         await ctx.channel.purge(limit=1)
-
+        
+        list_ = amount.split('|')
+        
+        if len(list_) >= 2:
+            member = list_[-1]
+            del list_[-1]
+                     
+        amount = '|'.join(list_)
         a = '+'.join(amount.split())
 
         if member:
@@ -342,13 +350,13 @@ class Fun(commands.Cog):
     @commands.command(aliases=['доки', 'документация'], description="Документация", usage="доки <None>")
     async def doc(self, ctx):
         content = """
-        Основа: https://discordpy.readthedocs.io/
-        Минимальная инструкция по установке: https://discordpy.readthedocs.io/en/latest/intro.html
-        Быстрый старт: https://discordpy.readthedocs.io/en/latest/quickstart.html
-        API: https://discordpy.readthedocs.io/en/latest/api.html
-        FAQ: https://discordpy.readthedocs.io/en/latest/faq.html         
+        Основа: https://bit.ly/2Z7FOC7
+        Минимальная инструкция по установке: https://bit.ly/3gvnF74
+        Быстрый старт: https://bit.ly/2CjesQn
+        API: https://bit.ly/3iHqJPB
+        FAQ: https://bit.ly/326Q1kn       
         """
-        embed = discord.Embed(title="Документация!", description=content, color=0xff7a0d)
+        embed = discord.Embed(title="Профессиональная документация!", description=content, color=0xff7a0d)
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["кот"], description="Выведет рандомного кота", usage="кот <None>")
