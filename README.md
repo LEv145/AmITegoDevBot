@@ -1,5 +1,5 @@
 ![https://discord.gg/fjtr7zr](https://cdn.discordapp.com/icons/658658120309932062/65a57b6454a972b34b7c6cae8fc2ef15.png)
-# FsokyCommBot
+# AmITegoDevBot (♥FsokyCommBot♥)
 ![https://www.python.org/](https://img.shields.io/github/pipenv/locked/python-version/metabolize/rq-dashboard-on-heroku?color=orange&label=Python)
 ![https://pypi.org/project/discord.py/](https://img.shields.io/badge/discord.py-v1.3.3-brightgreen)
 ![https://pypi.org/project/discord.py/](https://img.shields.io/badge/FsokyCommunity-Discord-red)
