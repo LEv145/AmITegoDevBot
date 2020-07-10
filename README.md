@@ -25,3 +25,6 @@ COLOR_GOOD = # Ваш Цвет без ""
   - Data - базы данных (SQLite).
   - Modules - модули и коги.
   - Utils - утилиты для удобной работы с ботом.
+
+#### Оригинальный автор и создатель
+  DSvinka Codes: https://github.com/DSvinka-Codes/
